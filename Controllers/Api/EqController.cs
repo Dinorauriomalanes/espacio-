@@ -218,15 +218,4 @@ public class EqController : Controller {
         var lista = collection.Find(filtro).ToList();
         return Ok(lista);
     }
-    [HttpGet("consulta19")]
-    public IActionResult Consulta19(string avion){
-        //listar todos los terrenos
-        MongoClient client = new MongoClient(CadenasConexion.MONGO_DB);
-        var db = client.GetDatabase("Aeropuerto");
-        var collection = db.GetCollection<Aeropuerto>("Vuelos");
-
-        var filtro = Builders<Aeropuerto>.Filter.Eq(x => x.TipoAvion,avion);
-        var lista = collection.Find(filtro).ToList();
-        return Ok(lista);
-    }
 }
