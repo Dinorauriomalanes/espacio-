@@ -19,12 +19,29 @@ const BuscadorVuelos = () => {
         const response = await fetch("http://localhost:5000/api/vuelos/ciudades-origen");
         if(response.ok) {
             const arr = await response.json();
-            console.log(arr);
+            let ciudades : Array<Ciudad> = [];
+
+            arr.map((x: string) => ciudades.push({Nombre: x}));
+
+            setCiudadesOrigen(ciudades);
+        }
+    }
+
+    const listarCiudadesDestino = async () => {
+        const response = await fetch("http://localhost:5000/api/vuelos/ciudades-destino");
+        if(response.ok) {
+            const arr = await response.json();
+            let ciudades : Array<Ciudad> = [];
+
+            arr.map((x: string) => ciudades.push({Nombre: x}));
+
+            setCiudadesDestino(ciudades);
         }
     }
 
     useEffect(()=> {
         listarCiudadesOrigen();
+        listarCiudadesDestino();
     },[]);
 
     return(
@@ -49,13 +66,23 @@ const BuscadorVuelos = () => {
                         <div className="col-sm-4">
                             <div className="mb-3">
                                 <label>Origen</label>
-                                <select className="form-control"></select>
+                                <select className="form-control">
+                                    <option value="">(Todos)</option>
+                                    {
+                                        ciudadesOrigen.map(x => <option key={x.Nombre} value={x.Nombre}>{x.Nombre}</option>)
+                                    }
+                                </select>
                             </div>
                         </div>
                         <div className="col-sm-4">
                             <div className="mb-3">
                                 <label>Destino</label>
-                                <select className="form-control"></select>
+                                <select className="form-control">
+                                    <option value="">(Todos)</option>
+                                    {
+                                        ciudadesDestino.map(x => <option key={x.Nombre} value={x.Nombre}>{x.Nombre}</option>)
+                                    }
+                                </select>
                             </div>
                         </div>
                         <div className="col-sm-4">
