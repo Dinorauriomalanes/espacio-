@@ -39,9 +39,30 @@ const BuscadorVuelos = () => {
         }
     }
 
+    const listarEstatus = async () => {
+        const response = await fetch("http://localhost:5000/api/vuelos/estatus");
+        if(response.ok) {
+            const arr = await response.json();
+            let estatus : Array<EstatusVuelo> = [];
+
+            arr.map((x: string) => estatus.push({Nombre: x}));
+
+            setListaEstatus(estatus);
+        }
+    }
+
+    const listarVuelo = async () => {
+        const response = await fetch("http://localhost:5000/api/vuelos/listar-vuelos");
+        if(response.ok) {
+            const arr = await response.json();
+            console.log(arr);
+        }
+    }
+
     useEffect(()=> {
         listarCiudadesOrigen();
         listarCiudadesDestino();
+        listarEstatus();
     },[]);
 
     return(
@@ -88,11 +109,16 @@ const BuscadorVuelos = () => {
                         <div className="col-sm-4">
                             <div className="mb-3">
                                 <label>Estatus</label>
-                                <select className="form-control"></select>
+                                <select className="form-control">
+                                    <option value="">(Todos)</option>
+                                    {
+                                        listadoEstatus.map(x => <option key={x.Nombre} value={x.Nombre}>{x.Nombre}</option>)
+                                    }
+                                </select>
                             </div>
                         </div>
                         <div className="col-12 d-flex justify-content-end">
-                            <button className="btn btn-primary">Buscar</button>
+                            <button className="btn btn-primary" onClick={()=> {listarVuelo();}}>Buscar</button>
                         </div>
                     </div>
                 </div>
