@@ -88,6 +88,14 @@ const BuscadorVuelos = () => {
             parametros.push("destino=" + destino);
         }
 
+        if(fechaInicial){
+            parametros.push("fechaInicial=" + fechaInicial);
+        }
+
+        if(fechaFinal){
+            parametros.push("fechaFinal=" + fechaFinal);
+        }
+
         if(parametros.length > 0){
             url += "?"
             url += parametros.join("&");
@@ -116,13 +124,15 @@ const BuscadorVuelos = () => {
                         <div className="col-sm-6">
                             <div className="mb-3">
                                 <label>Fecha Inicial</label>
-                                <input type="date" className="form-control" />
+                                <input type="date" className="form-control" 
+                                    value={fechaInicial} onChange={(e)=> setFechaInicial(e.target.value)} />
                             </div>
                         </div>
                         <div className="col-sm-6">
                             <div className="mb-3">
                                 <label>Fecha Final</label>
-                                <input type="date" className="form-control" />
+                                <input type="date" className="form-control" 
+                                    value={fechaFinal} onChange={(e)=> setFechaFinal(e.target.value)}/>
                             </div>
                         </div>
                         <div className="col-sm-4">
